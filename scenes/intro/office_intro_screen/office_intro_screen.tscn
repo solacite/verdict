@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=3 uid="uid://w4rad34l8fpp"]
+
+[ext_resource type="Script" uid="uid://cwai53jtsvnn5" path="res://scenes/intro/office_intro_screen/canvas_layer.gd" id="1_gjneb"]
+[ext_resource type="FontFile" uid="uid://blgx3t840dh3f" path="res://fonts/coromorant/cormorant_medium.ttf" id="2_6vluy"]
+[ext_resource type="FontFile" uid="uid://bil147v5vf7xu" path="res://fonts/montserrat/montserrat_regular.ttf" id="3_7af58"]
+
+[node name="Display" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("1_gjneb")
+
+[node name="TopRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -66.0
+offset_top = -92.0
+offset_right = 99.0
+offset_bottom = -289.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BottomRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -66.0
+offset_top = 358.0
+offset_right = 99.0
+offset_bottom = 126.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MainText" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -265.0
+offset_top = -98.0
+offset_right = 265.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_6vluy")
+theme_override_font_sizes/font_size = 120
+text = "mediocrity."
+
+[node name="SmallText" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.5
+offset_top = 45.0
+offset_right = 70.5
+offset_bottom = 71.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_7af58")
+theme_override_font_sizes/font_size = 20
+text = "year xx, day xx"
