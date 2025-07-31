@@ -1,14 +1,15 @@
-[gd_scene load_steps=28 format=3 uid="uid://bvph445nrhqyv"]
+[gd_scene load_steps=30 format=3 uid="uid://bvph445nrhqyv"]
 
 [ext_resource type="Script" uid="uid://d07642wsmqa26" path="res://scenes/intro/office_intro/chair.gd" id="1_djqid"]
 [ext_resource type="FontFile" uid="uid://bil147v5vf7xu" path="res://fonts/montserrat/montserrat_regular.ttf" id="2_57x4s"]
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="3_360kh"]
 [ext_resource type="Script" uid="uid://otvfkxraf2ce" path="res://scenes/intro/office_intro/mesh_instance_3d.gd" id="3_dchin"]
-[ext_resource type="Texture2D" uid="uid://ckiapcui0gdv8" path="res://materials/room/wood.png" id="4_7xhtl"]
+[ext_resource type="Texture2D" uid="uid://bj7eqnqypygfu" path="res://materials/room/WoodFloor051_4K-JPG_Color.jpg" id="4_1g7a3"]
 [ext_resource type="Script" uid="uid://dk4p07ieamwgy" path="res://scenes/intro/office_intro/canvas_layer.gd" id="4_57x4s"]
-[ext_resource type="Texture2D" uid="uid://bjlr81a61k3me" path="res://materials/room/granite_tile.jpg" id="5_1g7a3"]
+[ext_resource type="Texture2D" uid="uid://bl0yjjsibvieu" path="res://materials/room/Concrete034_4K-JPG_Color.jpg" id="5_1g7a3"]
 [ext_resource type="FontFile" uid="uid://ducalfqy7hghw" path="res://fonts/montserrat/montserrat_medium.ttf" id="5_360kh"]
 [ext_resource type="PackedScene" uid="uid://ct4jfx3tyof64" path="res://models/objects/bed/bed.glb" id="7_d8tv4"]
+[ext_resource type="PackedScene" uid="uid://c3sg73525nnjp" path="res://models/objects/office_desk.glb" id="10_mn0k7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -57,7 +58,7 @@ gradient = SubResource("Gradient_dchin")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1g7a3"]
 albedo_color = Color(0.439613, 0.435112, 0.463918, 1)
-albedo_texture = ExtResource("4_7xhtl")
+albedo_texture = ExtResource("4_1g7a3")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
 albedo_texture = ExtResource("5_1g7a3")
@@ -66,13 +67,15 @@ albedo_texture = ExtResource("5_1g7a3")
 albedo_color = Color(0.489778, 0.357869, 0.255387, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
-albedo_color = Color(0.698039, 0.713726, 0.733333, 1)
+albedo_texture = ExtResource("5_1g7a3")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_272bh"]
 albedo_color = Color(0.788235, 0.788235, 0.576471, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5vw27"]
 albedo_color = Color(0.178997, 0.258367, 0.26137, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1g7a3"]
 
 [node name="Main" type="Node3D"]
 
@@ -196,6 +199,7 @@ size = Vector3(7.2, 7.2, 0.2)
 
 [node name="Table" type="CSGCombiner3D" parent="Office CSG"]
 transform = Transform3D(-4.47035e-08, 0, -1, 0, 1, 0, 1, 0, -4.47035e-08, 2.5, 0, -2.1)
+visible = false
 material_override = SubResource("StandardMaterial3D_lquwl")
 use_collision = true
 
@@ -288,6 +292,17 @@ text = "Go to your computer."
 
 [node name="Bed" parent="Furniture" instance=ExtResource("7_d8tv4")]
 transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, -2.5, 1.3, 2.1)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Furniture/Bed"]
+transform = Transform3D(148.239, 0, 0, 0, 57.015, 0, 0, 0, 205.254, 0, 0.263158, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Furniture/Bed/StaticBody3D"]
+transform = Transform3D(0.012, 0, 0, 0, 0.006, 0, 0, 0, 0.01, 0, 0, 0)
+mesh = SubResource("BoxMesh_1g7a3")
+skeleton = NodePath("../..")
+
+[node name="Table" parent="." instance=ExtResource("10_mn0k7")]
+transform = Transform3D(-3.0598e-07, 0, -7, 0, 7, 0, 7, 0, -3.0598e-07, 3.5, 1.3, -3)
 
 [connection signal="body_entered" from="Office CSG/Chair/Area3D" to="Office CSG/Chair" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Office CSG/Chair/Area3D" to="Office CSG/Chair" method="_on_area_3d_body_exited"]
