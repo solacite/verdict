@@ -25,7 +25,11 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bvp3"]
+diffuse_mode = 3
+specular_mode = 2
 albedo_color = Color(0.771908, 0.608682, 0.482121, 1)
+roughness = 0.0
+rim_enabled = true
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_aw6c5"]
 height = 1.46
@@ -83,7 +87,7 @@ albedo_color = Color(0.178997, 0.258367, 0.26137, 1)
 environment = SubResource("Environment_0xm2m")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.984808, 0.150384, -0.0868239, 2.78059e-08, 0.5, 0.866026, 0.173648, 0.852869, -0.492404, 0, 11.4, 0)
+transform = Transform3D(-0.984808, 0.150384, -0.0868239, 2.78059e-08, 0.5, 0.866026, 0.173648, 0.852869, -0.492404, 0, 6.6, 0)
 shadow_enabled = true
 
 [node name="Office CSG" type="Node" parent="."]
