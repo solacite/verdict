@@ -1,0 +1,408 @@
+[gd_scene load_steps=32 format=3 uid="uid://bvph445nrhqyv"]
+
+[ext_resource type="Script" uid="uid://d07642wsmqa26" path="res://scenes/intro/office_intro/chair.gd" id="1_djqid"]
+[ext_resource type="FontFile" uid="uid://bil147v5vf7xu" path="res://fonts/montserrat/montserrat_regular.ttf" id="2_57x4s"]
+[ext_resource type="Script" uid="uid://otvfkxraf2ce" path="res://scenes/intro/office_intro/mesh_instance_3d.gd" id="3_dchin"]
+[ext_resource type="Texture2D" uid="uid://bj7eqnqypygfu" path="res://materials/room/WoodFloor051_4K-JPG_Color.jpg" id="4_1g7a3"]
+[ext_resource type="Script" uid="uid://dk4p07ieamwgy" path="res://scenes/intro/office_intro/canvas_layer.gd" id="4_57x4s"]
+[ext_resource type="Texture2D" uid="uid://bl0yjjsibvieu" path="res://materials/room/Concrete034_4K-JPG_Color.jpg" id="5_1g7a3"]
+[ext_resource type="FontFile" uid="uid://ducalfqy7hghw" path="res://fonts/montserrat/montserrat_medium.ttf" id="5_360kh"]
+[ext_resource type="PackedScene" uid="uid://tkipvu2dloqm" path="res://models/furniture/bed/normal_bed.glb" id="9_1g7a3"]
+[ext_resource type="PackedScene" uid="uid://bcn01saa81ucf" path="res://models/furniture/desk/bedroom_desk.glb" id="10_mn0k7"]
+[ext_resource type="Script" uid="uid://bo4ltbji833vg" path="res://scripts/player.gd" id="11_oa0ia"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_ig7tw"]
+sky_material = SubResource("ProceduralSkyMaterial_7dm0k")
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+sky = SubResource("Sky_ig7tw")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Shader" id="Shader_7xhtl"]
+code = "shader_type spatial;
+
+render_mode diffuse_toon, specular_toon;
+
+uniform vec4 tint : source_color = vec4(1.0);
+uniform sampler2D albedo_texture : source_color;
+uniform float metallic : hint_range(0.0, 1.0) = 0.0;
+uniform sampler2D normal_map;
+uniform float shadow_size = 0.045;
+uniform float shadow_blend = 0.001;
+uniform float shadow_extra_intensity = 0.0;
+uniform vec4 shadow_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform vec4 light_tint : source_color = vec4(1.0);
+uniform float rimlight_size = 0.921;
+uniform float rimlight_blend = 0.01;
+uniform vec4 rimlight_color : source_color = vec4(1.0);
+uniform bool use_normalmap = true;
+uniform bool animated = true;
+uniform float time_scale = 0.02;
+uniform vec3 normal_bias = vec3(0.0);
+uniform vec3 light_bias = vec3(0.0);
+uniform bool use_view = true;
+uniform vec4 view_bias : source_color = vec4(1.0, 0.0, 1.0, 1.0);
+uniform float view_multiplier : hint_range(-1.0, 1.0) = -1.0;
+
+float fresnel(float amount, vec3 normal, vec3 view) {
+    return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0)), amount);
+}
+
+varying vec3 vertex_normal;
+varying vec3 vertex_tangent;
+
+void vertex() {
+    vertex_normal = NORMAL;
+    vertex_tangent = TANGENT;
+}
+
+void fragment() {
+    ALBEDO = texture(albedo_texture, UV).rgb * tint.rgb;
+    METALLIC = metallic;
+}
+
+void light() {
+    vec3 normal;
+    if (use_normalmap) {
+        vec3 normal_from_texture;
+        if (animated) {
+            normal_from_texture = texture(normal_map, UV + TIME * time_scale).rgb;
+        } else {
+            normal_from_texture = texture(normal_map, UV).rgb;
+        }
+        
+        // Fix normal map calculation
+        normal_from_texture = normal_from_texture * 2.0 - 1.0; // Convert from [0,1] to [-1,1]
+        normal = normalize(NORMAL + normal_from_texture + normal_bias);
+    } else {
+        normal = normalize(NORMAL + normal_bias);
+    }
+    
+    if (use_view) {
+        normal = mix(normal, normal - VIEW * view_bias.rgb * view_multiplier, 0.5);
+    }
+    
+    float NdotL = dot(normal, normalize(LIGHT + light_bias));
+    
+    float rounded = smoothstep(shadow_size, shadow_blend + shadow_size, NdotL);
+    float one_minus = 1.0 - rounded;
+    vec3 mult1 = LIGHT_COLOR * rounded * light_tint.rgb * ATTENUATION;
+    vec3 mult2 = (one_minus * 1.4 * shadow_color.rgb) - shadow_extra_intensity;
+    vec3 add1 = mult1 + mult2;
+    
+    float add3 = rimlight_blend + rimlight_size;
+    float basic_fresnel = fresnel(1.0, NORMAL, VIEW);
+    float smoothed = smoothstep(rimlight_size, add3, basic_fresnel);
+    
+    vec3 add2 = add1 + smoothed * rimlight_color.rgb;
+    DIFFUSE_LIGHT += ALBEDO * add2;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oa0ia"]
+render_priority = 0
+shader = SubResource("Shader_7xhtl")
+shader_parameter/tint = Color(0.941781, 0.801677, 0.735534, 1)
+shader_parameter/metallic = 0.0
+shader_parameter/shadow_size = 0.045
+shader_parameter/shadow_blend = 0.001
+shader_parameter/shadow_extra_intensity = 0.0
+shader_parameter/shadow_color = Color(0, 0, 0, 1)
+shader_parameter/light_tint = Color(1, 1, 1, 1)
+shader_parameter/rimlight_size = 10.0
+shader_parameter/rimlight_blend = 0.01
+shader_parameter/rimlight_color = Color(1, 1, 1, 1)
+shader_parameter/use_normalmap = true
+shader_parameter/animated = true
+shader_parameter/time_scale = 0.02
+shader_parameter/normal_bias = Vector3(0, 0, 0)
+shader_parameter/light_bias = Vector3(0, 0, 0)
+shader_parameter/use_view = true
+shader_parameter/view_bias = Color(1, 0, 1, 1)
+shader_parameter/view_multiplier = -1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sdbiv"]
+next_pass = SubResource("ShaderMaterial_oa0ia")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_aw6c5"]
+height = 1.46
+radius = 2.2
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_dchin"]
+viewport_path = NodePath("Stage/Office CSG/Chair/Area3D/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d8tv4"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = SubResource("ViewportTexture_dchin")
+
+[sub_resource type="QuadMesh" id="QuadMesh_7xhtl"]
+
+[sub_resource type="Gradient" id="Gradient_360kh"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dchin"]
+gradient = SubResource("Gradient_360kh")
+fill_to = Vector2(0.324786, 0.508547)
+
+[sub_resource type="Gradient" id="Gradient_dchin"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d8tv4"]
+gradient = SubResource("Gradient_dchin")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1g7a3"]
+albedo_color = Color(0.439613, 0.435112, 0.463918, 1)
+albedo_texture = ExtResource("4_1g7a3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
+albedo_texture = ExtResource("5_1g7a3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
+albedo_color = Color(0.489778, 0.357869, 0.255387, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
+albedo_texture = ExtResource("5_1g7a3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_272bh"]
+albedo_color = Color(0.788235, 0.788235, 0.576471, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5vw27"]
+albedo_color = Color(0.178997, 0.258367, 0.26137, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mn0k7"]
+
+[node name="Main" type="Node3D"]
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(-0.984808, 0.150384, -0.0868239, 2.78059e-08, 0.5, 0.866026, 0.173648, 0.852869, -0.492404, 0, 13.2, 0)
+shadow_enabled = true
+
+[node name="Stage" type="Node3D" parent="."]
+
+[node name="Instructions" type="Node" parent="Stage"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Stage/Instructions"]
+script = ExtResource("4_57x4s")
+
+[node name="to_computer" type="Label" parent="Stage/Instructions/CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -155.0
+offset_top = 17.0
+offset_right = 155.0
+offset_bottom = 59.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("5_360kh")
+theme_override_font_sizes/font_size = 30
+text = "Go to your computer."
+
+[node name="Furniture" type="Node" parent="Stage"]
+
+[node name="normal_bed" parent="Stage/Furniture" instance=ExtResource("9_1g7a3")]
+transform = Transform3D(-0.56, 0, 4.89568e-08, 0, 0.56, 0, -4.89568e-08, 0, -0.56, -2.4, 1.5, 1.7)
+
+[node name="Office CSG" type="Node" parent="Stage"]
+
+[node name="Chair" type="Node" parent="Stage/Office CSG"]
+script = ExtResource("1_djqid")
+
+[node name="Chair" type="CSGCombiner3D" parent="Stage/Office CSG/Chair"]
+transform = Transform3D(-8.18277e-08, 0, -1.872, 0, 1.6848, 0, 1.872, 0, -8.18277e-08, 3.1, 0.5, -1.7)
+material_override = SubResource("StandardMaterial3D_sdbiv")
+use_collision = true
+
+[node name="Seat" type="CSGBox3D" parent="Stage/Office CSG/Chair/Chair"]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0.907692, 0.576923)
+size = Vector3(1, 0.2, 1)
+
+[node name="Legs" type="CSGCombiner3D" parent="Stage/Office CSG/Chair/Chair"]
+
+[node name="Leg" type="CSGBox3D" parent="Stage/Office CSG/Chair/Chair/Legs"]
+transform = Transform3D(0.6, 0, 0, 0, 1, 0, 0, 0, 0.6, -0.165385, 0.684615, 0.427923)
+size = Vector3(0.1, 0.4, 0.1)
+
+[node name="Leg2" type="CSGBox3D" parent="Stage/Office CSG/Chair/Chair/Legs"]
+transform = Transform3D(0.6, 0, 0, 0, 1, 0, 0, 0, 0.6, -0.165385, 0.684615, 0.704846)
+size = Vector3(0.1, 0.4, 0.1)
+
+[node name="Leg3" type="CSGBox3D" parent="Stage/Office CSG/Chair/Chair/Legs"]
+transform = Transform3D(0.6, 0, 0, 0, 1, 0, 0, 0, 0.6, 0.15, 0.684615, 0.704846)
+size = Vector3(0.1, 0.4, 0.1)
+
+[node name="Leg4" type="CSGBox3D" parent="Stage/Office CSG/Chair/Chair/Legs"]
+transform = Transform3D(0.6, 0, 0, 0, 1, 0, 0, 0, 0.6, 0.15, 0.684615, 0.427923)
+size = Vector3(0.1, 0.4, 0.1)
+
+[node name="Bars" type="CSGCombiner3D" parent="Stage/Office CSG/Chair/Chair"]
+
+[node name="Bar" type="CSGBox3D" parent="Stage/Office CSG/Chair/Chair/Bars"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.4, 0.119231, 1.14615, 0.720231)
+size = Vector3(0.1, 0.4, 0.1)
+
+[node name="Bar2" type="CSGBox3D" parent="Stage/Office CSG/Chair/Chair/Bars"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.4, -0.15, 1.14615, 0.720231)
+size = Vector3(0.1, 0.4, 0.1)
+
+[node name="Back" type="CSGBox3D" parent="Stage/Office CSG/Chair/Chair"]
+transform = Transform3D(1, 0, 0, 0, 0.6, 0, 0, 0, 0.7, -0.00769219, 1.35385, 0.719231)
+size = Vector3(0.4, 0.4, 0.1)
+
+[node name="Area3D" type="Area3D" parent="Stage/Office CSG/Chair"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stage/Office CSG/Chair/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0, 0, 0, 1, 1.75605, 1.23651, -1.62784)
+shape = SubResource("CylinderShape3D_aw6c5")
+
+[node name="sit_label" type="Label3D" parent="Stage/Office CSG/Chair/Area3D"]
+transform = Transform3D(0.756, 0, 0, 0, 1, 0, 0, 0, 1, 1.35605, 3.48144, -1.97157)
+outline_modulate = Color(0, 0, 0, 0)
+text = "hold E to sit"
+font = ExtResource("2_57x4s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stage/Office CSG/Chair/Area3D/sit_label"]
+transform = Transform3D(0.661376, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0741403, 0.51856, 0.07157)
+material_override = SubResource("StandardMaterial3D_d8tv4")
+mesh = SubResource("QuadMesh_7xhtl")
+skeleton = NodePath("../..")
+script = ExtResource("3_dchin")
+
+[node name="SubViewport" type="SubViewport" parent="Stage/Office CSG/Chair/Area3D"]
+transparent_bg = true
+
+[node name="Control" type="Control" parent="Stage/Office CSG/Chair/Area3D/SubViewport"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Stage/Office CSG/Chair/Area3D/SubViewport/Control"]
+layout_mode = 0
+offset_right = 512.0
+offset_bottom = 512.0
+scale = Vector2(8, 8)
+fill_mode = 4
+texture_under = SubResource("GradientTexture2D_dchin")
+texture_progress = SubResource("GradientTexture2D_d8tv4")
+tint_over = Color(2.98411e-06, 0.701504, 0.703864, 1)
+
+[node name="Floor" type="CSGBox3D" parent="Stage/Office CSG"]
+transform = Transform3D(1.4014, 0, 0, 0, 1.4014, 0, 0, 0, 1.4014, -0.272003, 0.9474, -0.32)
+material_override = SubResource("StandardMaterial3D_1g7a3")
+use_collision = true
+size = Vector3(7.2, 0.5, 7.2)
+
+[node name="Walls" type="CSGCombiner3D" parent="Stage/Office CSG"]
+transform = Transform3D(1.274, 0, 0, 0, 1.7836, 0, 0, 0, 1.274, 0, 0, -0.1)
+material_override = SubResource("StandardMaterial3D_h2yge")
+use_collision = true
+
+[node name="Wall4" type="CSGBox3D" parent="Stage/Office CSG/Walls"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 0.48, 0, 1, 0, 1.31134e-07, 3.3, 2.21539, -0.199999)
+size = Vector3(7.2, 7.2, 0.2)
+
+[node name="Wall3" type="CSGBox3D" parent="Stage/Office CSG/Walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 0.48, 0, -1, 0, -4.37114e-08, -3.7, 2.21539, -0.199999)
+size = Vector3(7.2, 7.2, 0.2)
+
+[node name="Wall2" type="CSGBox3D" parent="Stage/Office CSG/Walls"]
+transform = Transform3D(1, 0, 0, 0, 0.48, 0, 0, 0, 1, -0.2, 2.21539, -3.7)
+size = Vector3(7.2, 7.2, 0.2)
+
+[node name="Wall" type="CSGBox3D" parent="Stage/Office CSG/Walls"]
+transform = Transform3D(1, 0, 0, 0, 0.48, 0, 0, 0, 1, -0.2, 2.21539, 3.3)
+size = Vector3(7.2, 7.2, 0.2)
+
+[node name="Table" type="CSGCombiner3D" parent="Stage/Office CSG"]
+transform = Transform3D(-4.47035e-08, 0, -1, 0, 1, 0, 1, 0, -4.47035e-08, 2.5, 0, -2.1)
+visible = false
+material_override = SubResource("StandardMaterial3D_lquwl")
+use_collision = true
+
+[node name="Legs" type="CSGCombiner3D" parent="Stage/Office CSG/Table"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, -0.1, 0)
+
+[node name="Leg" type="CSGBox3D" parent="Stage/Office CSG/Table/Legs"]
+transform = Transform3D(1.62, 0, 0, 0, 2.7, 0, 0, 0, 1.62, -0.433462, 1.88462, -1.20746)
+size = Vector3(0.1, 0.4, 0.1)
+
+[node name="Leg2" type="CSGBox3D" parent="Stage/Office CSG/Table/Legs"]
+transform = Transform3D(1.62, 0, 0, 0, 2.7, 0, 0, 0, 1.62, -0.433462, 1.88462, -0.159769)
+size = Vector3(0.1, 0.4, 0.1)
+
+[node name="Leg3" type="CSGBox3D" parent="Stage/Office CSG/Table/Legs"]
+transform = Transform3D(1.62, 0, 0, 0, 2.7, 0, 0, 0, 1.62, 1.81808, 1.88462, -0.159769)
+size = Vector3(0.1, 0.4, 0.1)
+
+[node name="Leg4" type="CSGBox3D" parent="Stage/Office CSG/Table/Legs"]
+transform = Transform3D(1.62, 0, 0, 0, 2.7, 0, 0, 0, 1.62, 1.81808, 1.88462, -1.20746)
+size = Vector3(0.1, 0.4, 0.1)
+
+[node name="Base" type="CSGBox3D" parent="Stage/Office CSG/Table"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 2.35, -0.7)
+size = Vector3(2.6, 0.1, 1.4)
+
+[node name="Ceiling" type="CSGBox3D" parent="Stage/Office CSG"]
+transform = Transform3D(1.4014, 0, 0, 0, 1.4014, 0, 0, 0, 1.4014, -0.272003, 6.7474, -0.32)
+material_override = SubResource("StandardMaterial3D_7mycd")
+use_collision = true
+size = Vector3(7.2, 0.5, 7.2)
+
+[node name="Ceiling Light" type="CSGCombiner3D" parent="Stage/Office CSG"]
+
+[node name="Light" type="CSGCombiner3D" parent="Stage/Office CSG/Ceiling Light"]
+transform = Transform3D(-2.37528e-07, 0, 0.429, 0, 0.088, 0, -5.434, 0, -1.87522e-08, 2.1, 6.3, -0.3)
+
+[node name="Base2" type="CSGBox3D" parent="Stage/Office CSG/Ceiling Light/Light"]
+transform = Transform3D(0.9, 0, 0, 0, 1, 0, 0, 0, 0.7, 0, 1.52588e-05, 0)
+material_override = SubResource("StandardMaterial3D_272bh")
+
+[node name="Base" type="CSGBox3D" parent="Stage/Office CSG/Ceiling Light/Light"]
+transform = Transform3D(1.1, 0, 0, 0, 1, 0, 0, 0, 1.2, 0, 1.13637, 0)
+material_override = SubResource("StandardMaterial3D_5vw27")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Stage/Office CSG/Ceiling Light"]
+transform = Transform3D(0.984808, 0.150384, 0.0868239, -2.78059e-08, 0.5, -0.866025, -0.173648, 0.852869, 0.492404, -2.38419e-07, 10.5, 0.299999)
+omni_range = 15.0
+
+[node name="Light2" type="CSGCombiner3D" parent="Stage/Office CSG/Ceiling Light"]
+transform = Transform3D(-2.37528e-07, 0, 0.429, 0, 0.088, 0, -5.434, 0, -1.87522e-08, -2.6, 6.3, -0.3)
+
+[node name="Base2" type="CSGBox3D" parent="Stage/Office CSG/Ceiling Light/Light2"]
+transform = Transform3D(0.9, 0, 0, 0, 1, 0, 0, 0, 0.7, 0, 1.52588e-05, 0)
+material_override = SubResource("StandardMaterial3D_272bh")
+
+[node name="Base" type="CSGBox3D" parent="Stage/Office CSG/Ceiling Light/Light2"]
+transform = Transform3D(1.1, 0, 0, 0, 1, 0, 0, 0, 1.2, 0, 1.13637, 0)
+material_override = SubResource("StandardMaterial3D_5vw27")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+script = ExtResource("11_oa0ia")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 1.5)
+shape = SubResource("CapsuleShape3D_mn0k7")
+
+[node name="Head" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/Head"]
+
+[node name="bedroom_desk" parent="." instance=ExtResource("10_mn0k7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3.5, 0.9, -1.5)
+
+[connection signal="body_entered" from="Stage/Office CSG/Chair/Area3D" to="Stage/Office CSG/Chair" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Stage/Office CSG/Chair/Area3D" to="Stage/Office CSG/Chair" method="_on_area_3d_body_exited"]

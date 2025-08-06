@@ -1,13 +1,33 @@
 extends CharacterBody3D
 
+@onready var head = $Head
+
 var current_speed = 5.0
 
+const walking_speed = 5.0
+const sprinting_speed = 8.0
+const crouching_speed = 3.0
+
 const jump_velocity = 4.5
+
+const mouse_sens = 50
 
 # Get the gravity from the project settings to be synced with RigidBody nodes
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func _input(event):
+	if event is InputEventMouseMotion:
+		rotate_y(event.relative.x)
+
 func _physics_process(delta):
+	if Input.is_action_pressed("sprint"):
+		current_speed = sprinting_speed
+	else:
+		current_speed = walking_speed
+	
 	# Add gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -17,9 +37,9 @@ func _physics_process(delta):
 		velocity.y = jump_velocity
 	
 	# Get input direction + handle movement/deceleration
-	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var input_dir = Input.get_vector("move_left", "move_right", "move_fwd", "move_bkwd")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	
+
 	if direction:
 		velocity.x = direction.x * current_speed
 		velocity.z = direction.z * current_speed

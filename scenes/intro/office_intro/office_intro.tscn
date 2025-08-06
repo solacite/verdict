@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bvph445nrhqyv"]
+[gd_scene load_steps=32 format=3 uid="uid://bvph445nrhqyv"]
 
 [ext_resource type="Script" uid="uid://d07642wsmqa26" path="res://scenes/intro/office_intro/chair.gd" id="1_djqid"]
 [ext_resource type="FontFile" uid="uid://bil147v5vf7xu" path="res://fonts/montserrat/montserrat_regular.ttf" id="2_57x4s"]
@@ -7,7 +7,8 @@
 [ext_resource type="Script" uid="uid://dk4p07ieamwgy" path="res://scenes/intro/office_intro/canvas_layer.gd" id="4_57x4s"]
 [ext_resource type="Texture2D" uid="uid://bl0yjjsibvieu" path="res://materials/room/Concrete034_4K-JPG_Color.jpg" id="5_1g7a3"]
 [ext_resource type="FontFile" uid="uid://ducalfqy7hghw" path="res://fonts/montserrat/montserrat_medium.ttf" id="5_360kh"]
-[ext_resource type="PackedScene" uid="uid://wklegmh4xdl8" path="res://models/furniture/bed/normal_bed.glb" id="9_1g7a3"]
+[ext_resource type="PackedScene" uid="uid://tkipvu2dloqm" path="res://models/furniture/bed/normal_bed.glb" id="9_1g7a3"]
+[ext_resource type="PackedScene" uid="uid://bcn01saa81ucf" path="res://models/furniture/desk/bedroom_desk.glb" id="10_mn0k7"]
 [ext_resource type="Script" uid="uid://bo4ltbji833vg" path="res://scripts/player.gd" id="11_oa0ia"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
@@ -211,13 +212,16 @@ text = "Go to your computer."
 
 [node name="Furniture" type="Node" parent="Stage"]
 
+[node name="normal_bed" parent="Stage/Furniture" instance=ExtResource("9_1g7a3")]
+transform = Transform3D(-0.56, 0, 4.89568e-08, 0, 0.56, 0, -4.89568e-08, 0, -0.56, -2.4, 1.5, 1.7)
+
 [node name="Office CSG" type="Node" parent="Stage"]
 
 [node name="Chair" type="Node" parent="Stage/Office CSG"]
 script = ExtResource("1_djqid")
 
 [node name="Chair" type="CSGCombiner3D" parent="Stage/Office CSG/Chair"]
-transform = Transform3D(-8.18277e-08, 0, -1.872, 0, 1.6848, 0, 1.872, 0, -8.18277e-08, 2.8, 0.5, -2)
+transform = Transform3D(-8.18277e-08, 0, -1.872, 0, 1.6848, 0, 1.872, 0, -8.18277e-08, 3.1, 0.5, -1.7)
 material_override = SubResource("StandardMaterial3D_sdbiv")
 use_collision = true
 
@@ -389,7 +393,7 @@ material_override = SubResource("StandardMaterial3D_5vw27")
 script = ExtResource("11_oa0ia")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 1.5)
 shape = SubResource("CapsuleShape3D_mn0k7")
 
 [node name="Head" type="Node3D" parent="Player"]
@@ -397,8 +401,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Player/Head"]
 
-[node name="normal_bed" parent="." instance=ExtResource("9_1g7a3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 3.6, 1.6)
+[node name="bedroom_desk" parent="." instance=ExtResource("10_mn0k7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3.5, 0.9, -1.5)
 
 [connection signal="body_entered" from="Stage/Office CSG/Chair/Area3D" to="Stage/Office CSG/Chair" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Stage/Office CSG/Chair/Area3D" to="Stage/Office CSG/Chair" method="_on_area_3d_body_exited"]
