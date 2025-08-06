@@ -10,7 +10,7 @@ const crouching_speed = 3.0
 
 const jump_velocity = 4.5
 
-const mouse_sens = 50
+const mouse_sens = 0.4
 
 # Get the gravity from the project settings to be synced with RigidBody nodes
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -20,7 +20,7 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		rotate_y(event.relative.x)
+		rotate_y(-deg_to_rad(event.relative.x))
 
 func _physics_process(delta):
 	if Input.is_action_pressed("sprint"):
