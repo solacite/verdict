@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dm61icu7uvx7y"]
+
+[ext_resource type="PackedScene" uid="uid://c6dxte1ca4btc" path="res://models/rooms/roof_bedroom.glb" id="1_s6bhx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j8477"]
+transparency = 1
+blend_mode = 3
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.878431, 1, 1, 1)
+roughness = 0.65
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.8
+refraction_enabled = true
+refraction_scale = 0.35
+
+[node name="roof_bedroom" instance=ExtResource("1_s6bhx")]
+
+[node name="Cube_021" parent="." index="0"]
+material_override = SubResource("StandardMaterial3D_j8477")
