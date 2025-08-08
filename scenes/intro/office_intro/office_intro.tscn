@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://d07642wsmqa26" path="res://scenes/intro/office_intro/chair.gd" id="1_djqid"]
 [ext_resource type="FontFile" uid="uid://bil147v5vf7xu" path="res://fonts/montserrat/montserrat_regular.ttf" id="2_57x4s"]
+[ext_resource type="PackedScene" uid="uid://dhgf8ycliy35" path="res://models/furniture/desk/bedroom_desk.tscn" id="3_1g7a3"]
 [ext_resource type="Script" uid="uid://otvfkxraf2ce" path="res://scenes/intro/office_intro/mesh_instance_3d.gd" id="3_dchin"]
 [ext_resource type="Script" uid="uid://dk4p07ieamwgy" path="res://scenes/intro/office_intro/canvas_layer.gd" id="4_57x4s"]
+[ext_resource type="PackedScene" uid="uid://kqmkvd0n63a0" path="res://models/furniture/bed/normal_bed.tscn" id="4_mn0k7"]
 [ext_resource type="FontFile" uid="uid://ducalfqy7hghw" path="res://fonts/montserrat/montserrat_medium.ttf" id="5_360kh"]
-[ext_resource type="PackedScene" uid="uid://tkipvu2dloqm" path="res://models/furniture/bed/normal_bed.glb" id="9_1g7a3"]
-[ext_resource type="PackedScene" uid="uid://bcn01saa81ucf" path="res://models/furniture/desk/bedroom_desk.glb" id="10_mn0k7"]
 [ext_resource type="Script" uid="uid://cavvceyx0ial6" path="res://scenes/intro/office_intro/player.gd" id="10_oa0ia"]
 [ext_resource type="PackedScene" uid="uid://x34q3oxdsehi" path="res://models/rooms/roof_bedroom.tscn" id="11_sdbiv"]
 
@@ -223,11 +223,11 @@ text = "Go to your computer."
 
 [node name="Furniture" type="Node" parent="Stage"]
 
-[node name="normal_bed" parent="Stage/Furniture" instance=ExtResource("9_1g7a3")]
-transform = Transform3D(0.56, 0, 0, 0, 0.56, 0, 0, 0, 0.56, -2.9, 1.5, -1.2)
-
-[node name="bedroom_desk" parent="Stage/Furniture" instance=ExtResource("10_mn0k7")]
+[node name="bedroom_desk" parent="Stage/Furniture" instance=ExtResource("3_1g7a3")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3.1, 0.9, -1.3)
+
+[node name="normal_bed" parent="Stage/Furniture" instance=ExtResource("4_mn0k7")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2.9, 1.5, -1.2)
 
 [node name="Office CSG" type="Node" parent="Stage"]
 
