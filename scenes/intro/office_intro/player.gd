@@ -21,6 +21,7 @@ func _ready():
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sens))
+		head.rotate_x(deg_to_rad(-event.relative.y * mouse_sens))
 
 func _physics_process(delta):
 	if Input.is_action_pressed("sprint"):
