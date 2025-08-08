@@ -3,14 +3,12 @@
 [ext_resource type="Script" uid="uid://d07642wsmqa26" path="res://scenes/intro/office_intro/chair.gd" id="1_djqid"]
 [ext_resource type="FontFile" uid="uid://bil147v5vf7xu" path="res://fonts/montserrat/montserrat_regular.ttf" id="2_57x4s"]
 [ext_resource type="Script" uid="uid://otvfkxraf2ce" path="res://scenes/intro/office_intro/mesh_instance_3d.gd" id="3_dchin"]
-[ext_resource type="Texture2D" uid="uid://bj7eqnqypygfu" path="res://materials/room/WoodFloor051_4K-JPG_Color.jpg" id="4_1g7a3"]
 [ext_resource type="Script" uid="uid://dk4p07ieamwgy" path="res://scenes/intro/office_intro/canvas_layer.gd" id="4_57x4s"]
-[ext_resource type="Texture2D" uid="uid://bl0yjjsibvieu" path="res://materials/room/Concrete034_4K-JPG_Color.jpg" id="5_1g7a3"]
 [ext_resource type="FontFile" uid="uid://ducalfqy7hghw" path="res://fonts/montserrat/montserrat_medium.ttf" id="5_360kh"]
 [ext_resource type="PackedScene" uid="uid://tkipvu2dloqm" path="res://models/furniture/bed/normal_bed.glb" id="9_1g7a3"]
 [ext_resource type="PackedScene" uid="uid://bcn01saa81ucf" path="res://models/furniture/desk/bedroom_desk.glb" id="10_mn0k7"]
 [ext_resource type="Script" uid="uid://cavvceyx0ial6" path="res://scenes/intro/office_intro/player.gd" id="10_oa0ia"]
-[ext_resource type="PackedScene" uid="uid://x34q3oxdsehi" path="res://roof_bedroom.tscn" id="11_sdbiv"]
+[ext_resource type="PackedScene" uid="uid://x34q3oxdsehi" path="res://models/rooms/roof_bedroom.tscn" id="11_sdbiv"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -160,18 +158,24 @@ colors = PackedColorArray(0, 0, 0, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_d8tv4"]
 gradient = SubResource("Gradient_dchin")
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1g7a3"]
+load_path = "res://.godot/imported/WoodFloor051_4K-JPG_Color.jpg-6ecd20093249f766a0d28a1d886942cb.s3tc.ctex"
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1g7a3"]
 albedo_color = Color(0.439613, 0.435112, 0.463918, 1)
-albedo_texture = ExtResource("4_1g7a3")
+albedo_texture = SubResource("CompressedTexture2D_1g7a3")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mn0k7"]
+load_path = "res://.godot/imported/Concrete034_4K-JPG_Color.jpg-8c82b817997cdec2c625bb4846d925ed.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
-albedo_texture = ExtResource("5_1g7a3")
+albedo_texture = SubResource("CompressedTexture2D_mn0k7")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
 albedo_color = Color(0.489778, 0.357869, 0.255387, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
-albedo_texture = ExtResource("5_1g7a3")
+albedo_texture = SubResource("CompressedTexture2D_mn0k7")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_272bh"]
 albedo_color = Color(0.788235, 0.788235, 0.576471, 1)
