@@ -133,8 +133,7 @@ shader_parameter/view_multiplier = -1.0
 next_pass = SubResource("ShaderMaterial_oa0ia")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_aw6c5"]
-height = 1.46
-radius = 2.2
+height = 0.2
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_dchin"]
 viewport_path = NodePath("Stage/Office CSG/Chair/Area3D/SubViewport")
@@ -279,11 +278,11 @@ size = Vector3(0.4, 0.4, 0.1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 0, 1.7)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Stage/Office CSG/Chair/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0, 0, 0, 1, 0.35605, 1.23651, -3.02784)
+transform = Transform3D(3.7, 0, 0, 0, 1.85, 0, 0, 0, 3.7, 0.35605, 1.28651, -3.22784)
 shape = SubResource("CylinderShape3D_aw6c5")
 
 [node name="sit_label" type="Label3D" parent="Stage/Office CSG/Chair/Area3D"]
-transform = Transform3D(0.756, 0, 0, 0, 1, 0, 0, 0, 1, 1.35605, 3.28144, -3.17157)
+transform = Transform3D(0.756, 0, 0, 0, 1, 0, 0, 0, 1, 0.25605, 3.68144, -3.17157)
 outline_modulate = Color(0, 0, 0, 0)
 text = "hold E to sit"
 font = ExtResource("2_57x4s")

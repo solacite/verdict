@@ -12,13 +12,13 @@ func _ready():
 	set_process(false)
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
-	if body.name == "ProtoController":
+	if body.name == "Player":
 		interaction_progress.visible = true
 		sit_label.visible = true
 		set_process(true)
 
 func _on_area_3d_body_exited(body: Node3D) -> void:
-	if body.name == "ProtoController":
+	if body.name == "Player":
 		interaction_progress.value = 0
 		interaction_progress.visible = false
 		sit_label.visible = false
