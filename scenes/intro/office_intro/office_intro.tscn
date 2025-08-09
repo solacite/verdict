@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bvph445nrhqyv"]
+[gd_scene load_steps=34 format=3 uid="uid://bvph445nrhqyv"]
 
 [ext_resource type="Script" uid="uid://d07642wsmqa26" path="res://scenes/intro/office_intro/chair.gd" id="1_djqid"]
 [ext_resource type="FontFile" uid="uid://bil147v5vf7xu" path="res://fonts/montserrat/montserrat_regular.ttf" id="2_57x4s"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://dk4p07ieamwgy" path="res://scenes/intro/office_intro/canvas_layer.gd" id="4_57x4s"]
 [ext_resource type="PackedScene" uid="uid://kqmkvd0n63a0" path="res://models/furniture/bed/normal_bed.tscn" id="4_mn0k7"]
 [ext_resource type="FontFile" uid="uid://ducalfqy7hghw" path="res://fonts/montserrat/montserrat_medium.ttf" id="5_360kh"]
+[ext_resource type="PackedScene" uid="uid://co0km4rs7rarx" path="res://models/furniture/laptop/keyboard/keyboard.glb" id="10_mn0k7"]
 [ext_resource type="Script" uid="uid://cavvceyx0ial6" path="res://scenes/intro/office_intro/player.gd" id="10_oa0ia"]
 [ext_resource type="PackedScene" uid="uid://x34q3oxdsehi" path="res://models/rooms/roof_bedroom.tscn" id="11_sdbiv"]
 
@@ -419,6 +420,9 @@ transform = Transform3D(0.336, 0, 0, 0, 0.336, 0, 0, 0, 0.336, -0.337032, 1.1633
 
 [node name="bedroom_desk" parent="." instance=ExtResource("3_1g7a3")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.97625, 0.89775, -1.24796)
+
+[node name="keyboard" parent="." instance=ExtResource("10_mn0k7")]
+transform = Transform3D(-7.34351e-09, 0, -0.168, 0, 0.168, 0, 0.168, 0, -7.34351e-09, 2.6, 2.91612, -1.26931)
 
 [connection signal="body_entered" from="Stage/Office CSG/Chair/Area3D" to="Stage/Office CSG/Chair" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Stage/Office CSG/Chair/Area3D" to="Stage/Office CSG/Chair" method="_on_area_3d_body_exited"]
