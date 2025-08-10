@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://chrry55vo1od5"]
+[gd_scene load_steps=5 format=3 uid="uid://chrry55vo1od5"]
 
 [ext_resource type="Script" uid="uid://wx20b8kdnumq" path="res://scenes/intro/office_intro/computer_game.gd" id="1_ok60g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f4d1h"]
+bg_color = Color(0.147428, 0.165949, 0.172387, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ok60g"]
 bg_color = Color(0.335872, 0.91534, 0.515007, 1)
@@ -23,6 +26,7 @@ script = ExtResource("1_ok60g")
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(28.96, 16.32)
+theme_override_styles/panel = SubResource("StyleBoxFlat_f4d1h")
 
 [node name="Task Bar" type="Panel" parent="General"]
 offset_top = 567.0
@@ -83,5 +87,20 @@ theme_override_font_sizes/font_size = 35
 text = "y/n"
 
 [node name="GameOverPanel" type="Panel" parent="Verdict"]
+visible = false
 offset_right = 1148.0
 offset_bottom = 639.0
+
+[node name="FinalScoreLabel" type="Label" parent="Verdict/GameOverPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ExitButton" type="Button" parent="Verdict"]
+offset_left = 1104.0
+offset_top = -2.0
+offset_right = 1124.0
+offset_bottom = 34.0
+scale = Vector2(2.71042, 2.08415)
+theme_type_variation = &"FlatButton"
+text = "x"

@@ -7,6 +7,7 @@ extends Control
 @onready var score_label = $Verdict/ScoreLabel
 @onready var timer_label = $Verdict/TimerLabel
 @onready var game_over_panel = $Verdict/GameOverPanel
+@onready var exit_button = $Verdict/ExitButton
 
 var names_pool = [
 	"maria", "john", "jane", "jasmine", "paco", "pablo",
@@ -26,8 +27,23 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	setup_ui()
 	start_new_game()
+	if exit_button:
+		exit_button.pressed.connect(_on_exit_pressed)
+
+func _on_exit_pressed():
+	get_tree().change_scene_to_file("res://scenes/intro/office_intro/office_intro.tscn")
 
 func setup_ui():
+	if guilty_button:
+		guilty_button.focus_mode = Control.FOCUS_NONE
+		guilty_button.mouse_filter = Control.MOUSE_FILTER_STOP
+	if innocent_button:
+		innocent_button.focus_mode = Control.FOCUS_NONE  
+		innocent_button.mouse_filter = Control.MOUSE_FILTER_STOP
+	if exit_button:
+		exit_button.focus_mode = Control.FOCUS_NONE
+		exit_button.mouse_filter = Control.MOUSE_FILTER_STOP
+	
 	result_label.visible = false
 	game_over_panel.visible = false
 	
