@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://chrry55vo1od5"]
+[gd_scene load_steps=12 format=3 uid="uid://chrry55vo1od5"]
 
 [ext_resource type="Script" uid="uid://wx20b8kdnumq" path="res://scenes/intro/office_intro/computer_game.gd" id="1_ok60g"]
+[ext_resource type="FontFile" uid="uid://bcts732ysfl27" path="res://fonts/coromorant/cormorant_regular.ttf" id="2_6646q"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f4d1h"]
 bg_color = Color(0, 0, 0, 1)
@@ -60,6 +61,7 @@ offset_left = 375.0
 offset_top = 53.0
 offset_right = 733.0
 offset_bottom = 190.0
+theme_override_fonts/font = ExtResource("2_6646q")
 theme_override_font_sizes/font_size = 80
 text = "name"
 horizontal_alignment = 1
@@ -70,6 +72,7 @@ offset_top = 235.0
 offset_right = 256.0
 offset_bottom = 275.0
 scale = Vector2(29.8979, 5.76491)
+theme_override_fonts/font = ExtResource("2_6646q")
 theme_override_styles/hover = SubResource("StyleBoxFlat_had5c")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_r8ayv")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ok60g")
@@ -80,6 +83,7 @@ offset_top = 233.0
 offset_right = 633.0
 offset_bottom = 273.0
 scale = Vector2(29.8979, 5.76491)
+theme_override_fonts/font = ExtResource("2_6646q")
 theme_override_styles/hover = SubResource("StyleBoxFlat_564fp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_idas7")
 theme_override_styles/normal = SubResource("StyleBoxFlat_6646q")
@@ -89,6 +93,7 @@ offset_left = 501.0
 offset_top = 153.0
 offset_right = 611.0
 offset_bottom = 222.0
+theme_override_fonts/font = ExtResource("2_6646q")
 theme_override_font_sizes/font_size = 35
 text = "time"
 horizontal_alignment = 1
@@ -98,6 +103,7 @@ offset_left = 13.0
 offset_top = 519.0
 offset_right = 113.0
 offset_bottom = 582.0
+theme_override_fonts/font = ExtResource("2_6646q")
 theme_override_font_sizes/font_size = 35
 text = "num"
 
@@ -106,6 +112,7 @@ offset_left = 17.0
 offset_top = 585.0
 offset_right = 72.0
 offset_bottom = 634.0
+theme_override_fonts/font = ExtResource("2_6646q")
 theme_override_font_sizes/font_size = 35
 text = "y/n"
 
@@ -118,11 +125,13 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_2nel4")
 
 [node name="FinalScoreLabel" type="Label" parent="Verdict/GameOverPanel"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 30.0
+offset_right = 87.0
+offset_bottom = 49.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_6646q")
 theme_override_font_sizes/font_size = 40
 text = "test"
 
@@ -133,4 +142,5 @@ offset_right = 1124.0
 offset_bottom = 34.0
 scale = Vector2(2.71042, 2.08415)
 theme_type_variation = &"FlatButton"
+theme_override_fonts/font = ExtResource("2_6646q")
 text = "x"

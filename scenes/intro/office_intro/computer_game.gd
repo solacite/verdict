@@ -60,6 +60,8 @@ func start_new_game():
 	next_person()
 
 func next_person():
+	game_active = true
+	
 	if round_count >= max_rounds:
 		end_game()
 		return
@@ -69,7 +71,7 @@ func next_person():
 
 	name_label.text = current_person
 	result_label.visible = false
-	timer_label.text = "Time: 5"
+	timer_label.text = "time: 5"
 	
 	guilty_button.disabled = false
 	innocent_button.disabled = false
@@ -82,7 +84,7 @@ func _process(delta):
 		return
 		
 	time_left -= delta
-	timer_label.text = "Time: " + str(int(time_left + 1))
+	timer_label.text = "time: " + str(int(time_left + 1))
 	
 	if time_left <= 0:
 		timeout()
@@ -141,7 +143,7 @@ func timeout():
 	innocent_button.disabled = true
 	
 	score -= 10
-	result_label.text = current_person + " - TIME'S UP! (-10 points)"
+	result_label.text = current_person + " - TIME'S UP! (-10)"
 	result_label.visible = true
 	score_label.text = "dolla: " + str(score)
 	
