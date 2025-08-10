@@ -12,7 +12,8 @@ extends Control
 var names_pool = [
 	"maria", "john", "jane", "jasmine", "paco", "pablo",
 	"marco", "andy", "matthew", "julie", "sophie", "sophia",
-	"daphne", "daisy", "catherine", "maddie", "shelby"
+	"daphne", "daisy", "catherine", "maddie", "shelby",
+	"derek", "pammy", "peggy", "eliza", "angelica"
 ]
 
 var current_person = ""
@@ -50,7 +51,7 @@ func setup_ui():
 	guilty_button.pressed.connect(_on_guilty_pressed)
 	innocent_button.pressed.connect(_on_innocent_pressed)
 	
-	score_label.text = "Score: 0"
+	score_label.text = "dolla: 0"
 	
 func start_new_game():
 	score = 0
@@ -114,56 +115,62 @@ func make_verdict(player_says_guilty: bool):
 	
 	var result_text = ""
 	if actually_guilty:
-		result_text = current_person + " was GUILTY! "
+		result_text = current_person + " committed tax fraud. "
 	else:
-		result_text = current_person + " was INNOCENT! "
+		result_text = current_person + " ran a boba shop. "
 	
 	if player_correct:
-		result_text += "You were RIGHT! (+" + str(points) + ")"
+		result_text += "yay! (+" + str(points) + ")"
 	else:
-		result_text += "You were WRONG! (" + str(points) + ")"
+		result_text += "aww! (" + str(points) + ")"
 	
 	result_label.text = result_text
 	result_label.visible = true
-	score_label.text = "Score: " + str(score)
+	score_label.text = "dolla: " + str(score)
 	
+	await get_tree().create_timer(1).timeout
 	next_person()
 
 func timeout():
+	if not game_active:
+		return
+		
+	game_active = false
+	
 	guilty_button.disabled = true
 	innocent_button.disabled = true
 	
 	score -= 10
 	result_label.text = current_person + " - TIME'S UP! (-10 points)"
 	result_label.visible = true
-	score_label.text = "Score: " + str(score)
+	score_label.text = "dolla: " + str(score)
 	
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(1.0).timeout
 	next_person()
 
 func end_game():
 	game_active = false
 	
 	var rating = get_score_rating()
-	var final_text = "FINAL VERDICT:\n\nScore: " + str(score) + "/" + str(max_rounds * 10)
-	final_text += "\n\nRating: " + rating
+	var final_text = "< final verdict >\n\ndolla: " + str(score) + "/" + str(max_rounds * 10)
+	final_text += "\n\nrating: " + rating
 	
 	game_over_panel.get_node("FinalScoreLabel").text = final_text
 	game_over_panel.visible = true
 
 func get_score_rating() -> String:
 	if score >= 120:
-		return "PERFECT JUDGE\ngj brotha"
+		return "PERFECT\ngj brotha"
 	elif score >= 90:
-		return "EXCELLENT JUDGE\nfire"
+		return "EXCELLENT\nfire"
 	elif score >= 60:
-		return "GOOD JUDGE\ncool"
+		return "GOOD\ncool"
 	elif score >= 30:
-		return "AVERAGE JUDGE\nmid"
+		return "AVERAGE\nmid"
 	elif score >= 0:
-		return "POOR JUDGE\ni will consider firing you"
+		return "POOR\ni will consider firing you"
 	else:
-		return "TERRIBLE JUDGE\nyou are out of a job"
+		return "BORDERLINE TERRIBLE\nyou are out of a job"
 
 func restart_game():
 	game_over_panel.visible = false

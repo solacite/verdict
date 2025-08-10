@@ -1,15 +1,33 @@
-[gd_scene load_steps=5 format=3 uid="uid://chrry55vo1od5"]
+[gd_scene load_steps=11 format=3 uid="uid://chrry55vo1od5"]
 
 [ext_resource type="Script" uid="uid://wx20b8kdnumq" path="res://scenes/intro/office_intro/computer_game.gd" id="1_ok60g"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f4d1h"]
-bg_color = Color(0.147428, 0.165949, 0.172387, 1)
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cl4kf"]
+bg_color = Color(0.151276, 0.151276, 0.151276, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_had5c"]
+bg_color = Color(0.261619, 0.491717, 0.309952, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r8ayv"]
+bg_color = Color(0.347817, 0.347817, 0.347817, 0.529412)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ok60g"]
 bg_color = Color(0.335872, 0.91534, 0.515007, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_564fp"]
+bg_color = Color(0.749695, 0.346513, 0.275145, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idas7"]
+bg_color = Color(0.34902, 0.34902, 0.34902, 0.529412)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6646q"]
 bg_color = Color(0.869035, 0.47187, 0.394145, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2nel4"]
+bg_color = Color(0, 0, 0, 1)
 
 [node name="Computer OS" type="Control"]
 layout_mode = 3
@@ -29,10 +47,11 @@ scale = Vector2(28.96, 16.32)
 theme_override_styles/panel = SubResource("StyleBoxFlat_f4d1h")
 
 [node name="Task Bar" type="Panel" parent="General"]
-offset_top = 567.0
+offset_top = 576.0
 offset_right = 40.0
-offset_bottom = 607.0
+offset_bottom = 616.0
 scale = Vector2(28.96, 2)
+theme_override_styles/panel = SubResource("StyleBoxFlat_cl4kf")
 
 [node name="Verdict" type="Node" parent="."]
 
@@ -51,6 +70,8 @@ offset_top = 235.0
 offset_right = 256.0
 offset_bottom = 275.0
 scale = Vector2(29.8979, 5.76491)
+theme_override_styles/hover = SubResource("StyleBoxFlat_had5c")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_r8ayv")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ok60g")
 
 [node name="GuiltyButton" type="Button" parent="Verdict"]
@@ -59,6 +80,8 @@ offset_top = 233.0
 offset_right = 633.0
 offset_bottom = 273.0
 scale = Vector2(29.8979, 5.76491)
+theme_override_styles/hover = SubResource("StyleBoxFlat_564fp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_idas7")
 theme_override_styles/normal = SubResource("StyleBoxFlat_6646q")
 
 [node name="TimerLabel" type="Label" parent="Verdict"]
@@ -72,17 +95,17 @@ horizontal_alignment = 1
 
 [node name="ScoreLabel" type="Label" parent="Verdict"]
 offset_left = 13.0
-offset_top = 577.0
+offset_top = 519.0
 offset_right = 113.0
-offset_bottom = 640.0
+offset_bottom = 582.0
 theme_override_font_sizes/font_size = 35
 text = "num"
 
 [node name="ResultLabel" type="Label" parent="Verdict"]
-offset_left = 1071.0
-offset_top = 580.0
-offset_right = 1126.0
-offset_bottom = 629.0
+offset_left = 17.0
+offset_top = 585.0
+offset_right = 72.0
+offset_bottom = 634.0
 theme_override_font_sizes/font_size = 35
 text = "y/n"
 
@@ -90,11 +113,18 @@ text = "y/n"
 visible = false
 offset_right = 1148.0
 offset_bottom = 639.0
+scale = Vector2(1.01726, 1.03903)
+theme_override_styles/panel = SubResource("StyleBoxFlat_2nel4")
 
 [node name="FinalScoreLabel" type="Label" parent="Verdict/GameOverPanel"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 40
+text = "test"
 
 [node name="ExitButton" type="Button" parent="Verdict"]
 offset_left = 1104.0
