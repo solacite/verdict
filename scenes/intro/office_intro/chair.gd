@@ -50,5 +50,4 @@ func sit_down():
 	sit_label.visible = false
 	interaction_progress.visible = false
 	
-	# Load the next scene (your cutscene)
-	#get_tree().change_scene_to_file("res://scenes/cutscene/computer_cutscene.tscn")
+	get_tree().change_scene_to_file("res://scenes/intro/office_intro/computer_game.tscn")

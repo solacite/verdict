@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://chrry55vo1od5"]
+
+[ext_resource type="Script" uid="uid://wx20b8kdnumq" path="res://scenes/intro/office_intro/computer_game.gd" id="1_ok60g"]
+
+[node name="Computer OS" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ok60g")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(28.96, 16.32)
+
+[node name="Task Bar" type="Panel" parent="."]
+layout_mode = 0
+offset_top = 567.0
+offset_right = 40.0
+offset_bottom = 607.0
+scale = Vector2(28.96, 2)
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 0
+offset_left = 77.0
+offset_top = 79.0
+offset_right = 117.0
+offset_bottom = 119.0
+scale = Vector2(15.24, 3.16)
+
+[node name="Pomodoro" type="Button" parent="BoxContainer"]
+layout_mode = 2
