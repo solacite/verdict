@@ -24,13 +24,10 @@ offset_right = 40.0
 offset_bottom = 607.0
 scale = Vector2(28.96, 2)
 
-[node name="BoxContainer" type="BoxContainer" parent="."]
-layout_mode = 0
-offset_left = 77.0
-offset_top = 79.0
-offset_right = 117.0
-offset_bottom = 119.0
-scale = Vector2(15.24, 3.16)
-
-[node name="Pomodoro" type="Button" parent="BoxContainer"]
+[node name="Guilty" type="Button" parent="."]
 layout_mode = 2
+offset_left = 283.0
+offset_top = 180.0
+offset_right = 291.0
+offset_bottom = 220.0
+scale = Vector2(29.8979, 5.76491)
